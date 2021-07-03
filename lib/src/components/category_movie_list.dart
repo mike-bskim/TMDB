@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tmdb/src/controller/movie_controller.dart';
 import 'package:flutter_tmdb/src/models/movie.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
+//import 'package:provider/provider.dart';
 
 
 class CategoryMovieList extends StatelessWidget {
-  const CategoryMovieList({Key? key}) : super(key: key);
+//  const CategoryMovieList({Key? key}) : super(key: key);
 
-  final MovieController movieController;
+  final MovieController _movieController = Get.put(MovieController());
 
   Widget _movieWidget(Movie movie) {
     return Container(
@@ -46,26 +47,18 @@ class CategoryMovieList extends StatelessWidget {
       padding: const EdgeInsets.all(15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
+        children: <Widget>[
           Text('NEW PLAYING'),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Consumer<MovieController>(
-              builder: (context, controller, child) {
-                return SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: List.generate(
-                      controller.movies.length,
-                      (movieController.movieIndex) => _movieWidget(controller.movies[movieController.movieIndex]),
-                      growable: false,
-                    ),
-                  ),
-                );
-              },
-              child: CategoryMovieList(),
-            ),
-          )
+            child: Obx(()=>Row(
+              children: List.generate(
+                  _movieController.movies.length,
+                (movieIndex) => _movieWidget(_movieController.movies[movieIndex]),
+                growable: false,
+              ),
+            ))
+          ),
         ],
       ),
     );

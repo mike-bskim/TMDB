@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tmdb/src/components/category_movie_list.dart';
 import 'package:flutter_tmdb/src/controller/movie_controller.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
+//import 'package:provider/provider.dart';
 
 class App extends StatefulWidget {
   @override
@@ -10,24 +11,21 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
 
-  late MovieController _movieController;
+  final MovieController _movieController = Get.put(MovieController());
+
   @override
   void initState() {
     super.initState();
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _movieController = Provider.of<MovieController>(context, listen: false);
-  }
-
   Widget _genreTag(Map<String, dynamic> genre) {
-    var isActive = _movieController.activeGenreId == genre['id'];
+    var isActive = _movieController.activeGenreId.value == genre['id'];
+//    print('isActive(${isActive.toString()}), id(${genre['id'].toString()})');
     return GestureDetector(
       onTap: () {
         _movieController.changeCategory(genre);
-        _movieController.movieIndex = 0;
+//        print('activeGenreId: '+ _movieController.activeGenreId.value.toString());
+//        print(genre['id']);
       },
       child: Container(
         padding: const EdgeInsets.all(10),
@@ -65,17 +63,14 @@ class _AppState extends State<App> {
             builder: (BuildContext context,
                 AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
               if (snapshot.hasData) {
-                return Consumer<MovieController>(
-                  builder: (context, value, child) {
-                    return SingleChildScrollView(
+                return SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
-                      child: Row(
+                      child: Obx(()=>Row(
                         children: List.generate(snapshot.data!.length,
                                 (index) => _genreTag(snapshot.data![index])),
-                      ),
+                      )),
                     );
-                  },
-                );
+
               } else {
                 return Center(
                   child: CircularProgressIndicator(),
@@ -83,7 +78,7 @@ class _AppState extends State<App> {
               }
 
           }),
-          CategoryMovieList(),
+          CategoryMovieList(), // => 장르별 영화정보를 표시하는 부분
         ],
       ),
     );
