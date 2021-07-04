@@ -7,8 +7,6 @@ import 'package:provider/provider.dart';
 class CategoryMovieList extends StatelessWidget {
   const CategoryMovieList({Key? key}) : super(key: key);
 
-  final MovieController movieController;
-
   Widget _movieWidget(Movie movie) {
     return Container(
       margin: const EdgeInsets.only(top: 10),
@@ -57,7 +55,7 @@ class CategoryMovieList extends StatelessWidget {
                   child: Row(
                     children: List.generate(
                       controller.movies.length,
-                      (movieController.movieIndex) => _movieWidget(controller.movies[movieController.movieIndex]),
+                      (index) => _movieWidget(controller.movies[index]),
                       growable: false,
                     ),
                   ),
