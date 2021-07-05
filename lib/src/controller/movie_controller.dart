@@ -6,7 +6,10 @@ class MovieController extends ChangeNotifier {
   var _movieRepository = MovieRepository();
   var movies = <Movie>[];
   var activeGenreId = -1;
-  var movieIndex = 0;
+//  var movieIndex = 0;
+  Color containerColor = Colors.white;
+  Color textColor = Colors.grey;
+  var textBold = FontWeight.normal;
 
 
   Future<List<Map<String, dynamic>>> loadGenre() async {

@@ -27,9 +27,9 @@ class MovieRepository {
     }
   }
 
-  Future<List<Movie>> loadMovieListWithGenre(int activeGenreId) async {
+  Future<List<Movie>> loadMovieListWithGenre(int genreId) async {
     var response = await _dio.get('/3/discover/movie',
-        queryParameters: {'with_genres': activeGenreId});
+        queryParameters: {'with_genres': genreId});
     if (response.data != null && response.data['results'] != null) {
       var data = response.data['results'] as List;
       return data.map((movie) => Movie.fromJson(movie)).toList();

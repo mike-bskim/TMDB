@@ -23,11 +23,20 @@ class _AppState extends State<App> {
   }
 
   Widget _genreTag(Map<String, dynamic> genre) {
-    var isActive = _movieController.activeGenreId == genre['id'];
+//    var isActive = _movieController.activeGenreId == genre['id'];
+  if(_movieController.activeGenreId == genre['id']){
+    _movieController.containerColor = Colors.grey;
+    _movieController.textColor = Colors.white;
+    _movieController.textBold = FontWeight.bold;
+  } else {
+    _movieController.containerColor = Colors.white;
+    _movieController.textColor = Colors.grey;
+    _movieController.textBold = FontWeight.normal;
+  }
     return GestureDetector(
       onTap: () {
         _movieController.changeCategory(genre);
-        _movieController.movieIndex = 0;
+//        _movieController.movieIndex = 0;
       },
       child: Container(
         padding: const EdgeInsets.all(10),
@@ -38,13 +47,13 @@ class _AppState extends State<App> {
             color: Colors.grey,
           ),
           borderRadius: BorderRadius.all(Radius.circular(30)),
-          color: isActive ? Colors.grey : Colors.white,
+          color: _movieController.containerColor, //isActive ? Colors.grey : Colors.white,
         ),
         child: Text(
           genre['name'],
           style: TextStyle(
-            color: isActive ? Colors.white : Colors.grey, //
-            fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
+            color: _movieController.textColor,//isActive ? Colors.white : Colors.grey, //
+            fontWeight: _movieController.textBold ,
           ),
         ),
       ),
