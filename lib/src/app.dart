@@ -20,12 +20,10 @@ class _AppState extends State<App> {
 
   Widget _genreTag(Map<String, dynamic> genre) {
     var isActive = _movieController.activeGenreId.value == genre['id'];
-//    print('isActive(${isActive.toString()}), id(${genre['id'].toString()})');
+    print('redraw _genreTag: ' + _movieController.activeGenreId.value.toString());
     return GestureDetector(
       onTap: () {
         _movieController.changeCategory(genre);
-//        print('activeGenreId: '+ _movieController.activeGenreId.value.toString());
-//        print(genre['id']);
       },
       child: Container(
         padding: const EdgeInsets.all(10),
@@ -39,7 +37,7 @@ class _AppState extends State<App> {
           color: isActive ? Colors.grey : Colors.white,
         ),
         child: Text(
-          genre['name'],
+          genre['name'] + '/' +_movieController.activeGenreId.value.toString(),
           style: TextStyle(
             color: isActive ? Colors.white : Colors.grey, //
             fontWeight: isActive ? FontWeight.bold : FontWeight.normal,

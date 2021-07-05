@@ -14,7 +14,7 @@ class MovieController extends GetxController {
 
   Future<List<Map<String, dynamic>>> loadGenre() async {
     var genreList = await _movieRepository.loadGenre();
-    print('genreList: ${genreList.toString()}');
+//    print('genreList: ${genreList.toString()}');
     if (genreList.isNotEmpty) {
       activeGenreId.value = genreList.first['id'].toInt();
       _loadMovieListWithGenre();
