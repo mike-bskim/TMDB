@@ -8,15 +8,19 @@ class MovieController extends GetxController {
 
   var _movieRepository = MovieRepository();
   RxList<Movie> movies = <Movie>[].obs;
-  RxInt activeGenreId = (-1).obs;
-//  RxInt movieIndex = 0.obs;
+//  RxInt activeGenreId = (-1).obs;
+  var activeGenreId = (-1);
+  Rx<Color> containerColor = Colors.white.obs;
+  Rx<Color> textColor = Colors.grey.obs;
+
+//  RxInt _movieIndex = 0.obs;
 
 
   Future<List<Map<String, dynamic>>> loadGenre() async {
     var genreList = await _movieRepository.loadGenre();
     print('genreList: ${genreList.toString()}');
     if (genreList.isNotEmpty) {
-      activeGenreId.value = genreList.first['id'].toInt();
+      activeGenreId = genreList.first['id'].toInt();
       _loadMovieListWithGenre();
     }
 //    print(genreList);
@@ -25,12 +29,12 @@ class MovieController extends GetxController {
 
   void _loadMovieListWithGenre() async {
 //    await Future.delayed(Duration(seconds: 2));
-    movies.value = await _movieRepository.loadMovieListWithGenre(activeGenreId.value);
+    movies.value = await _movieRepository.loadMovieListWithGenre(activeGenreId);
 //    notifyListeners();
   }
 
   void changeCategory(Map<String, dynamic> genre) {
-    activeGenreId.value = genre["id"];
+    activeGenreId = genre["id"];
 //    notifyListeners();
     _loadMovieListWithGenre();
   }

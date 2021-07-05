@@ -19,7 +19,14 @@ class _AppState extends State<App> {
   }
 
   Widget _genreTag(Map<String, dynamic> genre) {
-    var isActive = _movieController.activeGenreId.value == genre['id'];
+//    var isActive = _movieController.activeGenreId.value == genre['id'];
+    if(_movieController.activeGenreId == genre['id']) {
+      _movieController.containerColor.value = Colors.grey;
+      _movieController.textColor.value = Colors.white;
+    } else {
+      _movieController.containerColor.value = Colors.white;
+      _movieController.textColor.value = Colors.grey;
+    }
 //    print('isActive(${isActive.toString()}), id(${genre['id'].toString()})');
     return GestureDetector(
       onTap: () {
@@ -27,7 +34,7 @@ class _AppState extends State<App> {
 //        print('activeGenreId: '+ _movieController.activeGenreId.value.toString());
 //        print(genre['id']);
       },
-      child: Container(
+      child: Obx(()=>Container(
         padding: const EdgeInsets.all(10),
         margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(
@@ -36,16 +43,18 @@ class _AppState extends State<App> {
             color: Colors.grey,
           ),
           borderRadius: BorderRadius.all(Radius.circular(30)),
-          color: isActive ? Colors.grey : Colors.white,
+//          color: isActive ? Colors.grey : Colors.white,
+          color: _movieController.containerColor.value,
         ),
         child: Text(
           genre['name'],
           style: TextStyle(
-            color: isActive ? Colors.white : Colors.grey, //
-            fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
+//            color: isActive ? Colors.white : Colors.grey, //
+            color: _movieController.textColor.value, //
+            fontWeight: FontWeight.bold, //isActive ? FontWeight.bold : FontWeight.normal,
           ),
         ),
-      ),
+      )),
     );
   }
 
@@ -65,10 +74,10 @@ class _AppState extends State<App> {
               if (snapshot.hasData) {
                 return SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
-                      child: Obx(()=>Row(
+                      child: Row(
                         children: List.generate(snapshot.data!.length,
                                 (index) => _genreTag(snapshot.data![index])),
-                      )),
+                      ),
                     );
 
               } else {
