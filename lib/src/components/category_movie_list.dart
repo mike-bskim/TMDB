@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 class CategoryMovieList extends StatelessWidget {
 //  const CategoryMovieList({Key? key}) : super(key: key);
 
-  final MovieController _movieController = Get.put(MovieController());
+  final MovieController _movieController = Get.put(MovieController(Colors.white.obs, Colors.grey.obs));
 
   Widget _movieWidget(Movie movie) {
     return Container(

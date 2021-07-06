@@ -10,11 +10,16 @@ class MovieController extends GetxController {
   RxList<Movie> movies = <Movie>[].obs;
 //  RxInt activeGenreId = (-1).obs;
   var activeGenreId = (-1);
-  Rx<Color> containerColor = Colors.white.obs;
-  Rx<Color> textColor = Colors.grey.obs;
+  final Rx<Color> containerColor;// = Colors.white.obs;
+  final Rx<Color> textColor;// = Colors.grey.obs;
 
-//  RxInt _movieIndex = 0.obs;
+  MovieController(this.containerColor, this.textColor); //  RxInt _movieIndex = 0.obs;
 
+
+  void colorUpdate(Rx<Color> color1, Rx<Color> color2) {
+    containerColor(color1 as Color);
+    textColor(color2 as Color);
+  }
 
   Future<List<Map<String, dynamic>>> loadGenre() async {
     var genreList = await _movieRepository.loadGenre();

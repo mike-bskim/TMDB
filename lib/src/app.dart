@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+//import 'package:flutter/cupertino.dart';
 import 'package:flutter_tmdb/src/components/category_movie_list.dart';
 import 'package:flutter_tmdb/src/controller/movie_controller.dart';
 import 'package:get/get.dart';
@@ -11,7 +12,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
 
-  final MovieController _movieController = Get.put(MovieController());
+  final MovieController _movieController = Get.put(MovieController(Colors.white.obs, Colors.grey.obs));
 
   @override
   void initState() {
@@ -21,11 +22,17 @@ class _AppState extends State<App> {
   Widget _genreTag(Map<String, dynamic> genre) {
 //    var isActive = _movieController.activeGenreId.value == genre['id'];
     if(_movieController.activeGenreId == genre['id']) {
-      _movieController.containerColor.value = Colors.grey;
-      _movieController.textColor.value = Colors.white;
+//      _movieController.containerColor.value = Colors.grey;
+//      _movieController.textColor.value = Colors.white;
+      _movieController.containerColor(Colors.grey);
+      _movieController.textColor(Colors.white);
+//      _movieController.colorUpdate(Colors.grey.obs, Colors.white.obs);
     } else {
-      _movieController.containerColor.value = Colors.white;
-      _movieController.textColor.value = Colors.grey;
+//      _movieController.containerColor.value = Colors.white;
+//      _movieController.textColor.value = Colors.grey;
+//      _movieController.containerColor(Colors.white);
+//      _movieController.textColor(Colors.grey);
+//      _movieController.colorUpdate(Colors.white.obs);
     }
 //    print('isActive(${isActive.toString()}), id(${genre['id'].toString()})');
     return GestureDetector(
