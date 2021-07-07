@@ -12,7 +12,8 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
 
-  final MovieController _movieController = Get.put(MovieController(Colors.white.obs, Colors.grey.obs));
+//  final MovieController _movieController = Get.put(MovieController(Colors.white.obs, Colors.grey.obs));
+  final MovieController _movieController = Get.put(MovieController());
 
   @override
   void initState() {
@@ -24,15 +25,15 @@ class _AppState extends State<App> {
     if(_movieController.activeGenreId == genre['id']) {
 //      _movieController.containerColor.value = Colors.grey;
 //      _movieController.textColor.value = Colors.white;
-      _movieController.containerColor(Colors.grey);
-      _movieController.textColor(Colors.white);
-//      _movieController.colorUpdate(Colors.grey.obs, Colors.white.obs);
+//      _movieController.containerColor(Colors.grey);
+//      _movieController.textColor(Colors.white);
+      _movieController.colorUpdate(Colors.grey, Colors.white);
     } else {
 //      _movieController.containerColor.value = Colors.white;
 //      _movieController.textColor.value = Colors.grey;
 //      _movieController.containerColor(Colors.white);
 //      _movieController.textColor(Colors.grey);
-//      _movieController.colorUpdate(Colors.white.obs);
+      _movieController.colorUpdate(Colors.white, Colors.grey);
     }
 //    print('isActive(${isActive.toString()}), id(${genre['id'].toString()})');
     return GestureDetector(
@@ -41,7 +42,7 @@ class _AppState extends State<App> {
 //        print('activeGenreId: '+ _movieController.activeGenreId.value.toString());
 //        print(genre['id']);
       },
-      child: Obx(()=>Container(
+      child: Container(
         padding: const EdgeInsets.all(10),
         margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(
@@ -61,7 +62,7 @@ class _AppState extends State<App> {
             fontWeight: FontWeight.bold, //isActive ? FontWeight.bold : FontWeight.normal,
           ),
         ),
-      )),
+      ),
     );
   }
 
@@ -81,10 +82,10 @@ class _AppState extends State<App> {
               if (snapshot.hasData) {
                 return SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
-                      child: Row(
+                      child: Obx(()=>Row(
                         children: List.generate(snapshot.data!.length,
                                 (index) => _genreTag(snapshot.data![index])),
-                      ),
+                      )),
                     );
 
               } else {
