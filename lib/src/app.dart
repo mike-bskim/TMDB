@@ -83,8 +83,8 @@ class _AppState extends State<App> {
                 return SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Obx(()=>Row(
-                        children: List.generate(snapshot.data!.length,
-                                (index) => _genreTag(snapshot.data![index])),
+                        children: List.generate(snapshot.data.length,
+                                (index) => _genreTag(snapshot.data[index])),
                       )),
                     );
 

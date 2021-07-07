@@ -6,7 +6,7 @@ import 'package:flutter_tmdb/src/models/movie.dart';
 //import 'package:movie_api_sample/src/model/movie.dart';
 
 class MovieRepository {
-  late var _dio;
+  var _dio;
   MovieRepository() {
     _dio = Dio(
       BaseOptions(
