@@ -14,6 +14,8 @@ class _AppState extends State<App> {
 
 //  final MovieController _movieController = Get.put(MovieController(Colors.white.obs, Colors.grey.obs));
   final MovieController _movieController = Get.put(MovieController());
+  final ButtonColorController _buttonColorController = Get.put(ButtonColorController());
+  final TextColorController _textColorController = Get.put(TextColorController());
 
   @override
   void initState() {
@@ -21,19 +23,16 @@ class _AppState extends State<App> {
   }
 
   Widget _genreTag(Map<String, dynamic> genre) {
+    print('_genreTag >>>>>>>>>>>>>>>>>>>');
 //    var isActive = _movieController.activeGenreId.value == genre['id'];
     if(_movieController.activeGenreId == genre['id']) {
-//      _movieController.containerColor.value = Colors.grey;
-//      _movieController.textColor.value = Colors.white;
-//      _movieController.containerColor(Colors.grey);
-//      _movieController.textColor(Colors.white);
-      _movieController.colorUpdate(Colors.grey, Colors.white);
+      _buttonColorController.changeColor(Colors.grey);
+      _textColorController.changeColor(Colors.white);
+//      print('지정한 영화장르: ${_movieController.activeGenreId.toString()}');
     } else {
-//      _movieController.containerColor.value = Colors.white;
-//      _movieController.textColor.value = Colors.grey;
-//      _movieController.containerColor(Colors.white);
-//      _movieController.textColor(Colors.grey);
-      _movieController.colorUpdate(Colors.white, Colors.grey);
+      _buttonColorController.changeColor(Colors.white);
+      _textColorController.changeColor(Colors.grey);
+//      print('지정되지 않은 영화장르: ${genre['id'].toString()}');
     }
 //    print('isActive(${isActive.toString()}), id(${genre['id'].toString()})');
     return GestureDetector(
@@ -42,7 +41,7 @@ class _AppState extends State<App> {
 //        print('activeGenreId: '+ _movieController.activeGenreId.value.toString());
 //        print(genre['id']);
       },
-      child: Container(
+      child: Obx(()=>Container(
         padding: const EdgeInsets.all(10),
         margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(
@@ -52,17 +51,19 @@ class _AppState extends State<App> {
           ),
           borderRadius: BorderRadius.all(Radius.circular(30)),
 //          color: isActive ? Colors.grey : Colors.white,
-          color: _movieController.containerColor.value,
+//          color: _movieController.containerColor.value,
+          color: _buttonColorController.buttonColor.value,
         ),
         child: Text(
           genre['name'],
           style: TextStyle(
 //            color: isActive ? Colors.white : Colors.grey, //
-            color: _movieController.textColor.value, //
+//            color: _movieController.textColor.value, //
+            color: _textColorController.textColor.value,
             fontWeight: FontWeight.bold, //isActive ? FontWeight.bold : FontWeight.normal,
           ),
         ),
-      ),
+      )),
     );
   }
 
@@ -82,10 +83,10 @@ class _AppState extends State<App> {
               if (snapshot.hasData) {
                 return SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
-                      child: Obx(()=>Row(
+                      child: Row(
                         children: List.generate(snapshot.data.length,
                                 (index) => _genreTag(snapshot.data[index])),
-                      )),
+                      ),
                     );
 
               } else {
